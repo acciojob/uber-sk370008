@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 
 		if (firstAvailableDriver == null){
-			throw new Exception("No cab available!");
+			throw new Exception("No value present");
 		}
 		tripBooking.setDriver(firstAvailableDriver);
 		firstAvailableDriver.getCab().setAvailable(false);

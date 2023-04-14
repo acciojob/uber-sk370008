@@ -34,6 +34,7 @@ public class TripBooking {
     public TripBooking() {
     }
 
+
     public int getTripBookingId() {
         return tripBookingId;
     }

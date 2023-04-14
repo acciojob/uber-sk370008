@@ -79,7 +79,13 @@ public class CustomerServiceImpl implements CustomerService {
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking tripToCancel = tripBookingRepository2.findById(tripId).get();
 		tripToCancel.setStatus(TripStatus.CANCELED);
-		tripToCancel.getDriver().getCab().setAvailable(true);
+		tripToCancel.setBill(0);
+
+
+		Driver driver = tripToCancel.getDriver();
+		driver.getCab().setAvailable(true);
+
+		driverRepository2.save(driver);
 		tripBookingRepository2.save(tripToCancel);
 	}
 

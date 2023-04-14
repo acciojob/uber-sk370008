@@ -95,7 +95,11 @@ public class CustomerServiceImpl implements CustomerService {
 		TripBooking tripCompleted = tripBookingRepository2.findById(tripId).get();
 		if (!tripCompleted.getStatus().equals(TripStatus.CANCELED)) {
 			tripCompleted.setStatus(TripStatus.COMPLETED);
-			tripCompleted.getDriver().getCab().setAvailable(true);
+
+			Driver driver = tripCompleted.getDriver();
+			driver.getCab().setAvailable(true);
+
+			driverRepository2.save(driver);
 			tripBookingRepository2.save(tripCompleted);
 		}
 	}

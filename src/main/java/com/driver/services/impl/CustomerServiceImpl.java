@@ -49,20 +49,23 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setStatus(TripStatus.CONFIRMED);
 		int bill = distanceInKm * 10;
 		tripBooking.setBill(bill);
-		Customer customer = customerRepository2.findById(customerId).get();
-		tripBooking.setCustomer(customer);
+
 		List<Driver> driverList = driverRepository2.findAll();
 		Driver firstAvailableDriver = null;
+		boolean anyDriverAvailable = false;
 		for (Driver driver : driverList){
 			if (driver.getCab().getAvailable() == true){
 				firstAvailableDriver = driver;
+				anyDriverAvailable = true;
 				break;
 			}
 		}
 
-		if (firstAvailableDriver == null){
-			throw new Exception("No value present");
+		if (!anyDriverAvailable){
+			throw new Exception("No cab available!");
 		}
+		Customer customer = customerRepository2.findById(customerId).get();
+		tripBooking.setCustomer(customer);
 		tripBooking.setDriver(firstAvailableDriver);
 		firstAvailableDriver.getCab().setAvailable(false);
 		tripBookingRepository2.save(tripBooking);
